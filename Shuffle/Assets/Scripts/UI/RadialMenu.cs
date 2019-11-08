@@ -12,15 +12,16 @@ public class RadialMenu : MonoBehaviour
         }
     }
 
+    public int CurrentFrame { get; private set; }
+
     [SerializeField]
     private RadialButton[] _buttons;
 
     private PlayerController _playerController;
-    private int _currentFrame;
 
     public void ConfigureMenu(int frameIndex)
     {
-        _currentFrame = frameIndex;
+        CurrentFrame = frameIndex;
     }
 
     public void SendActionToController(ActionType type, Move move, Rotate rotate, Act act)
@@ -28,13 +29,13 @@ public class RadialMenu : MonoBehaviour
         switch (type)
         {
             case ActionType.Move:
-                _playerController.MoveTo(_currentFrame, move);
+                _playerController.MoveTo(CurrentFrame, move);
                 break;
             case ActionType.Rotate:
-                _playerController.RotateTo(_currentFrame, rotate);
+                _playerController.RotateTo(CurrentFrame, rotate);
                 break;
             case ActionType.Act:
-                _playerController.ActAs(_currentFrame, act);
+                _playerController.ActAs(CurrentFrame, act);
                 break;
         }
     }

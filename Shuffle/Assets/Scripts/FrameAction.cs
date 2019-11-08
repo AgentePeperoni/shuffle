@@ -1,9 +1,5 @@
-﻿using System;
-
-public class FrameAction
+﻿public class FrameAction
 {
-    public EventHandler<FrameActionEventArgs> OnActionChanged;
-
     public FrameAction()
     {
         Move = Move.None;
@@ -24,35 +20,22 @@ public class FrameAction
     public void SetMove(Move move)
     {
         Move = move;
-        OnActionChanged?.Invoke(this, new FrameActionEventArgs(ActionType.Move));
     }
 
     public void SetRotate(Rotate rotate)
     {
         Rotate = rotate;
-        OnActionChanged?.Invoke(this, new FrameActionEventArgs(ActionType.Rotate));
     }
 
     public void SetAct(Act act)
     {
         Act = act;
-        OnActionChanged?.Invoke(this, new FrameActionEventArgs(ActionType.Act));
     }
 
     public override string ToString()
     {
         return $"Move: {Move.ToString()}, Rotate: {Rotate.ToString()}, Act: {Act.ToString()}";
     }
-}
-
-public class FrameActionEventArgs : EventArgs
-{
-    public FrameActionEventArgs(ActionType changedActions)
-    {
-        this.changedActions = changedActions;
-    }
-
-    public readonly ActionType changedActions;
 }
 
 public enum Move
