@@ -24,8 +24,19 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private RadialMenu _radialMenuMove;
 
+    [SerializeField]
+    private GameObject _blockUI;
+
     private FrameButton[] _frameButtons;
     private PlayerController _playerController;
+
+    public void LockUI()
+    {
+        HideMoveRadialMenu();
+        _blockUI.SetActive(true);
+    }
+
+    public void UnlockUI() => _blockUI.SetActive(false);
 
     public void ShowMoveRadialMenu(FrameButton invoker)
     {
