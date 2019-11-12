@@ -5,20 +5,25 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public int CurrentFrame { get; private set; }
+
     private List<TimeObject> _timeObjects;
-
-    public int CurrentFrame { get; protected set; }
-
-    public void SetCurrentFrame(float frame)
+    
+    public void OnFrameChanged(object sender, TimelineEventArgs args)
     {
-        foreach (var obj in _timeObjects)
-            obj.SetCurrentFrame(Mathf.RoundToInt(frame));
-
-        CurrentFrame = Mathf.RoundToInt(frame);
+        SetCurrentFrame(args.frame);
     }
 
     private void Start()
     {
         _timeObjects = FindObjectsOfType<TimeObject>().ToList();
+    }
+
+    private void SetCurrentFrame(int frame)
+    {
+        foreach (var timeObj in _timeObjects)
+            timeObj.SetCurrentFrame(frame);
+
+        CurrentFrame = frame;
     }
 }
