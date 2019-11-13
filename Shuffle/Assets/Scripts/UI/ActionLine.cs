@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ActionLine : MonoBehaviour
+public class ActionLine : PreparationObject
 {
     public EventHandler<ActionLineEventArgs> OnStateChanged;
 
@@ -33,6 +33,18 @@ public class ActionLine : MonoBehaviour
 
     private Frame[] _frames;
 
+    public void SetColorToFrames(Color color)
+    {
+        foreach (var frame in _frames)
+            frame.SetContentColor(color);
+    }
+
+    public void ResetFrames()
+    {
+        foreach (var frame in _frames)
+            frame.Reset();
+    }
+
     private void Awake()
     {
         if (_lineAction == Actions.None)
@@ -45,6 +57,8 @@ public class ActionLine : MonoBehaviour
             _frames[i].FrameIndex = i;
             _frames[i].OnStateChanged += OnFrameValueChanged;
         }
+
+        IsReady = true;
     }
 
     private void OnFrameValueChanged(object sender, FrameEventArgs args)

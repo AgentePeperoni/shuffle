@@ -2,21 +2,33 @@
 
 using UnityEngine;
 
-public class Sequencer : MonoBehaviour
+public class Sequencer : PreparationObject
 {
     public EventHandler<SequencerEventArgs> OnStateChanged;
 
     public Timeline Timeline { get; private set; }
+    public ActionLine[] ActionLines { get; private set; }
 
-    private ActionLine[] _actionLines;
+    [SerializeField]
+    private GameObject _graphicsBlock;
+
+    public void ResetActionLines()
+    {
+        foreach (var line in ActionLines)
+            line.ResetFrames();
+    }
+
+    public void LockSequencer(bool value) => _graphicsBlock.SetActive(value);
 
     private void Awake()
     {
-        _actionLines = GetComponentsInChildren<ActionLine>();
-        foreach (var actionLine in _actionLines)
+        ActionLines = GetComponentsInChildren<ActionLine>();
+        foreach (var actionLine in ActionLines)
             actionLine.OnStateChanged += OnActionLineStateChanged;
 
         Timeline = GetComponentInChildren<Timeline>();
+
+        IsReady = true;
     }
 
     private void OnActionLineStateChanged(object sender, ActionLineEventArgs args)

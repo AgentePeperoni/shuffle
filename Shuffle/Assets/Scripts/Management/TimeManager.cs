@@ -3,7 +3,7 @@ using System.Linq;
 
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : PreparationObject
 {
     public int CurrentFrame { get; private set; }
 
@@ -14,9 +14,11 @@ public class TimeManager : MonoBehaviour
         SetCurrentFrame(args.frame);
     }
 
-    private void Start()
+    private void Awake()
     {
         _timeObjects = FindObjectsOfType<TimeObject>().ToList();
+
+        IsReady = true;
     }
 
     private void SetCurrentFrame(int frame)

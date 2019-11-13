@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-public class TimeObject : MonoBehaviour
+public class TimeObject : PreparationObject
 {
     public List<ObjectAction> TimeObjectActions { get; protected set; }
 
@@ -50,6 +50,8 @@ public class TimeObject : MonoBehaviour
 
         _initialPosition = transform.position;
         _initialRotation = transform.rotation;
+
+        IsReady = true;
     }
 
     private void ResetPosition()

@@ -112,6 +112,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &117636410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1710990004, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 8305263793130468970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,6 +1204,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _delayBetweenFrames: 0.5
+  _moveForwardColor: {r: 0, g: 1, b: 0, a: 1}
+  _moveRightColor: {r: 0, g: 1, b: 1, a: 1}
+  _moveBackwardColor: {r: 1, g: 0, b: 0, a: 1}
+  _moveLeftColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!114 &1263047695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3092,6 +3102,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3670146786541376043, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_MinHeight
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 4729247781792940875, guid: 464334f89bcf6c144bdcc44a0ed052e6,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -3827,6 +3842,11 @@ PrefabInstance:
       propertyPath: _lineAction
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5695004665137418692, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: _graphicsBlock
+      value: 
+      objectReference: {fileID: 117636410}
     - target: {fileID: 4836387522564231533, guid: 464334f89bcf6c144bdcc44a0ed052e6,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -4268,6 +4288,56 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4836387522582091147, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1263047694}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ResetSequencer
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711126348967924153, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138791574189210991, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138791574189210991, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138791574189210991, guid: 464334f89bcf6c144bdcc44a0ed052e6,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5138791574189210991, guid: 464334f89bcf6c144bdcc44a0ed052e6,
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0

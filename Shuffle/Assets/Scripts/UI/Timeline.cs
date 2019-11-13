@@ -3,16 +3,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Timeline : MonoBehaviour
+public class Timeline : PreparationObject
 {
     public EventHandler<TimelineEventArgs> OnFrameChanged;
 
     private Slider _timelineSlider;
 
+    public void SetSliderValue(float value) => _timelineSlider.value = value;
+
     private void Awake()
     {
         _timelineSlider = GetComponent<Slider>();
         _timelineSlider.onValueChanged.AddListener(OnValueChanged);
+
+        IsReady = true;
     }
 
     private void OnValueChanged(float newValue)

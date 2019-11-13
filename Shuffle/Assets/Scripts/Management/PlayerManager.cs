@@ -2,22 +2,24 @@
 
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : PreparationObject
 {
-    private Player _player;
+    public Player Player { get; private set; }
 
     public void OnActionsChanged(object sender, SequencerEventArgs args)
     {
         if (args.actionLineEventArgs.frameEventArgs.value)
-            _player.InsertAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
+            Player.InsertAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
         else
-            _player.RemoveAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
+            Player.RemoveAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
     }
 
     private void Awake()
     {
-        _player = FindObjectOfType<Player>();
-        if (_player == null)
+        Player = FindObjectOfType<Player>();
+        if (Player == null)
             throw new NullReferenceException("Скрипт игрока (Player) не найден!");
+
+        IsReady = true;
     }
 }

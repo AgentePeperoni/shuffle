@@ -2,10 +2,22 @@
 
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : PreparationObject
 {
+    [Header("Основные Настройки")]
     [SerializeField]
     private float _delayBetweenFrames;
+
+    [Space]
+    [Header("Настройки Отображения")]
+    [SerializeField]
+    private Color _moveForwardColor = Color.green;
+    [SerializeField]
+    private Color _moveRightColor = Color.cyan;
+    [SerializeField]
+    private Color _moveBackwardColor = Color.red;
+    [SerializeField]
+    private Color _moveLeftColor = Color.magenta;
 
     private TimeManager _timeManager;
     private PlayerManager _playerManager;
@@ -13,10 +25,17 @@ public class GameManager : MonoBehaviour
 
     public void Play()
     {
-        //StartCoroutine(PlayFramesWithDelay());
+        _sequencer.LockSequencer(true);
+        StartCoroutine(PlayFramesWithDelay());
     }
 
-    private void Start()
+    public void ResetSequencer()
+    {
+        _sequencer.ResetActionLines();
+        _sequencer.Timeline.SetSliderValue(0);
+    }
+
+    private IEnumerator Start()
     {
         _timeManager = FindObjectOfType<TimeManager>();
         _playerManager = FindObjectOfType<PlayerManager>();
@@ -24,18 +43,43 @@ public class GameManager : MonoBehaviour
         
         _sequencer.Timeline.OnFrameChanged += _timeManager.OnFrameChanged;
         _sequencer.OnStateChanged += _playerManager.OnActionsChanged;
+
+        for (int i = 0; i < _sequencer.ActionLines.Length; ++i)
+        {
+            ActionLine line = _sequencer.ActionLines[i];
+            yield return new WaitUntil(() => line.IsReady);
+
+            switch (line.LineAction)
+            {
+                case Actions.MoveForward:
+                    line.SetColorToFrames(_moveForwardColor);
+                    break;
+                case Actions.MoveRight:
+                    line.SetColorToFrames(_moveRightColor);
+                    break;
+                case Actions.MoveBackward:
+                    line.SetColorToFrames(_moveBackwardColor);
+                    break;
+                case Actions.MoveLeft:
+                    line.SetColorToFrames(_moveLeftColor);
+                    break;
+                default:
+                    line.SetColorToFrames(Color.black);
+                    break;
+            }
+        }
     }
 
-    //private IEnumerator PlayFramesWithDelay()
-    //{
-    //    while (_timeManager.CurrentFrame < 9)
-    //    {
-    //        _timeManager.SetCurrentFrame(_timeManager.CurrentFrame + 1);
-    //        yield return new WaitForSeconds(_delayBetweenFrames);
-    //    }
+    private IEnumerator PlayFramesWithDelay()
+    {
+        _sequencer.Timeline.SetSliderValue(0);
 
-    //    yield return new WaitForSeconds(2);
-
-    //    StopPlaying();
-    //}
+        for (int i = 0; i < _playerManager.Player.TimeObjectActions.Count + 1; ++i)
+        {
+            _sequencer.Timeline.SetSliderValue(i);
+            yield return new WaitForSeconds(_delayBetweenFrames);
+        }
+        
+        _sequencer.LockSequencer(false);
+    }
 }

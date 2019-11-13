@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Frame : MonoBehaviour
+public class Frame : PreparationObject
 {
     public EventHandler<FrameEventArgs> OnStateChanged;
     
@@ -18,9 +18,13 @@ public class Frame : MonoBehaviour
                 _frameIndex = value;
         }
     }
-
+    
     private Toggle _frameToggle;
     private int _frameIndex;
+
+    public void SetContentColor(Color color) => _frameToggle.graphic.color = color;
+
+    public void Reset() => _frameToggle.isOn = false;
 
     private void Awake()
     {
@@ -28,6 +32,8 @@ public class Frame : MonoBehaviour
         _frameToggle.isOn = false;
 
         _frameToggle.onValueChanged.AddListener(ToggleValueChanged);
+
+        IsReady = true;
     }
 
     private void ToggleValueChanged(bool newValue)
