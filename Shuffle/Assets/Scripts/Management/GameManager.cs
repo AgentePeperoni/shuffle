@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private float _delayBetweenFrames;
 
     private TimeManager _timeManager;
+    private PlayerManager _playerManager;
     private Sequencer _sequencer;
 
     public void Play()
@@ -18,9 +19,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _timeManager = FindObjectOfType<TimeManager>();
+        _playerManager = FindObjectOfType<PlayerManager>();
         _sequencer = FindObjectOfType<Sequencer>();
-
+        
         _sequencer.Timeline.OnFrameChanged += _timeManager.OnFrameChanged;
+        _sequencer.OnStateChanged += _playerManager.OnActionsChanged;
     }
 
     //private IEnumerator PlayFramesWithDelay()

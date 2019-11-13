@@ -4,24 +4,39 @@ using UnityEngine;
 
 public class ObjectAction
 {
-    public Actions Actions { get; protected set; }
+    public Actions ObjectActions { get; protected set; }
     public Vector3 MovementDirection { get; protected set; }
+
+    public ObjectAction()
+    {
+        ObjectActions = Actions.None;
+        MovementDirection = Vector3.zero;
+    }
 
     public void Add(Actions toAdd)
     {
-        Actions |= toAdd;
+        ObjectActions |= toAdd;
         CalculateDirection();
     }
 
     public void Remove(Actions toRemove)
     {
-        Actions ^= toRemove;
+        ObjectActions ^= toRemove;
         CalculateDirection();
     }
 
     private void CalculateDirection()
     {
-        // TODO: Calculate Direction
+        MovementDirection = Vector3.zero;
+
+        if (ObjectActions.HasFlag(Actions.MoveForward))
+            MovementDirection += Vector3.forward;
+        if (ObjectActions.HasFlag(Actions.MoveRight))
+            MovementDirection += Vector3.right;
+        if (ObjectActions.HasFlag(Actions.MoveBackward))
+            MovementDirection += Vector3.back;
+        if (ObjectActions.HasFlag(Actions.MoveLeft))
+            MovementDirection += Vector3.left;
     }
 }
 

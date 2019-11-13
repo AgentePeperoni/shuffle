@@ -25,6 +25,8 @@ public class Frame : MonoBehaviour
     private void Awake()
     {
         _frameToggle = GetComponent<Toggle>();
+        _frameToggle.isOn = false;
+
         _frameToggle.onValueChanged.AddListener(ToggleValueChanged);
     }
 
