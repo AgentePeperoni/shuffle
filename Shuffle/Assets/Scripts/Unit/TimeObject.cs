@@ -8,12 +8,12 @@ public class TimeObject : PreparationObject
     public List<ObjectAction> TimeObjectActions { get; protected set; }
 
     [SerializeField]
-    private float _distanceMultiplier = 1;
+    protected float _distanceMultiplier = 1;
 
-    private Vector3 _initialPosition;
-    private Quaternion _initialRotation;
+    protected Vector3 _initialPosition;
+    protected Quaternion _initialRotation;
     
-    public void SetCurrentFrame(int frame)
+    public virtual void SetCurrentFrame(int frame)
     {
         if (TimeObjectActions.Count < frame)
             while (TimeObjectActions.Count <= frame)
@@ -24,7 +24,7 @@ public class TimeObject : PreparationObject
             ResolveAction(TimeObjectActions[i]);
     }
 
-    public void InsertAction(int index, Actions action)
+    public virtual void InsertAction(int index, Actions action)
     {
         if (TimeObjectActions.Count <= index)
         {
@@ -35,7 +35,7 @@ public class TimeObject : PreparationObject
         TimeObjectActions[index].Add(action);
     }
 
-    public void RemoveAction(int index, Actions action)
+    public virtual void RemoveAction(int index, Actions action)
     {
         if (TimeObjectActions.Count <= index)
             return;
@@ -43,7 +43,7 @@ public class TimeObject : PreparationObject
         TimeObjectActions[index].Remove(action);
     }
 
-    private void Awake()
+    protected void Awake()
     {
         if (TimeObjectActions == null)
             TimeObjectActions = new List<ObjectAction>();
@@ -54,21 +54,26 @@ public class TimeObject : PreparationObject
         IsReady = true;
     }
 
-    private void ResetPosition()
+    protected virtual void ResetPosition()
     {
         transform.position = _initialPosition;
         transform.rotation = _initialRotation;
     }
 
-    private void ResolveAction(ObjectAction action)
+    protected virtual void ResolveAction(ObjectAction action)
     {
-        Vector3 localMovement = 
+        transform.position += TranslateToLocal(action) * _distanceMultiplier;
+    }
+
+    protected Vector3 TranslateToLocal(ObjectAction action)
+    {
+        Vector3 localMovement =
             Quaternion.Euler(
                 transform.rotation.eulerAngles.x,
                 transform.rotation.eulerAngles.y,
                 transform.rotation.eulerAngles.z
                 ) * action.MovementDirection;
 
-        transform.position += localMovement * _distanceMultiplier;
+        return localMovement;
     }
 }
