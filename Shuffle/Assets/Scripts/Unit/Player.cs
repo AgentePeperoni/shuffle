@@ -71,7 +71,7 @@ public class Player : TimeObject
     {
         Vector3 direction = TranslateToLocal(action);
         bool obstacle = Physics.Raycast(_raycastParent.position, direction, _distanceMultiplier, ObstacleMask, QueryTriggerInteraction.Collide);
-        bool death = Physics.CheckBox(_raycastParent.position + direction, (Vector3.one / 2), Quaternion.identity, DeathMask);
+        bool death = Physics.CheckBox(_raycastParent.position, (Vector3.one / 2.1f), Quaternion.identity, DeathMask);
 
         if (death)
             return PlayerState.Dead;

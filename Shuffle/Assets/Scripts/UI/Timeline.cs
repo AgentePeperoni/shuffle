@@ -23,6 +23,9 @@ public class Timeline : PreparationObject
     {
         int frame = Mathf.RoundToInt(newValue);
         OnFrameChanged?.Invoke(this, new TimelineEventArgs(frame));
+
+        // Обработка перехода на следующую секцию
+
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -9,8 +10,16 @@ public class Sequencer : PreparationObject
     public Timeline Timeline { get; private set; }
     public ActionLine[] ActionLines { get; private set; }
 
+    public int FrameOffset { get; private set; }
+    
+    [Header("Настройки Отображения")]
     [SerializeField]
     private GameObject _graphicsBlock;
+
+    public void LoadSection(List<ObjectAction> frameSequence)
+    {
+        // Load sequence
+    }
 
     public void ResetActionLines()
     {
