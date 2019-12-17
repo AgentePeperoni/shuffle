@@ -12,7 +12,7 @@ public class Player : TimeObject
         set
         {
             _state = value;
-            OnStateChanged(this, new PlayerEventArgs(_state));
+            OnStateChanged(this, new PlayerEventArgs(_state, _hasDied));
         }
     }
 
@@ -43,6 +43,9 @@ public class Player : TimeObject
         switch (State)
         {
             case PlayerState.None:
+                if (_hasDied)
+                    return;
+
                 base.ResolveAction(action);
                 break;
             case PlayerState.Dead:
@@ -71,7 +74,7 @@ public class Player : TimeObject
     {
         Vector3 direction = TranslateToLocal(action);
         bool obstacle = Physics.Raycast(_raycastParent.position, direction, _distanceMultiplier, ObstacleMask, QueryTriggerInteraction.Collide);
-        bool death = Physics.CheckBox(_raycastParent.position, (Vector3.one / 2.1f), Quaternion.identity, DeathMask);
+        bool death = Physics.CheckBox(_raycastParent.position + action.MovementDirection, (Vector3.one / 2.1f), Quaternion.identity, DeathMask);
 
         if (death)
             return PlayerState.Dead;
@@ -85,10 +88,12 @@ public class Player : TimeObject
 public class PlayerEventArgs : EventArgs
 {
     public readonly PlayerState state;
+    public readonly bool hasDied;
 
-    public PlayerEventArgs(PlayerState currentState)
+    public PlayerEventArgs(PlayerState currentState, bool hasDied)
     {
         state = currentState;
+        this.hasDied = hasDied;
     }
 }
 

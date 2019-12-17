@@ -43,6 +43,9 @@ public class PlayerManager : PreparationObject
 
     private void OnPlayerStateChanged(object sender, PlayerEventArgs args)
     {
+        if (args.hasDied)
+            return;
+
         switch (args.state)
         {
             case PlayerState.None:
