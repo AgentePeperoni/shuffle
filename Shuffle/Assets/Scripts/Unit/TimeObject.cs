@@ -13,6 +13,12 @@ public class TimeObject : PreparationObject
     protected Vector3 _initialPosition;
     protected Quaternion _initialRotation;
     
+    public virtual void SetInitialFrameCount(int count)
+    {
+        for (int i = 0; i < count; ++i)
+            TimeObjectActions.Add(new ObjectAction());
+    }
+
     public virtual void SetCurrentFrame(int frame)
     {
         if (TimeObjectActions.Count < frame)

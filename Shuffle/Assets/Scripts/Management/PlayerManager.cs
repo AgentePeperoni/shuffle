@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 
 using UnityEngine;
 
 public class PlayerManager : PreparationObject
 {
     public Player Player { get; private set; }
+    public GameManager GameManager { get; set; }
 
     [Header("Основные Настройки")]
     [SerializeField]
@@ -18,6 +20,8 @@ public class PlayerManager : PreparationObject
     private GameObject _deathText;
     [SerializeField]
     private GameObject _blockedText;
+
+    private Coroutine _checkpointCoroutine;
 
     public void OnActionsChanged(object sender, SequencerEventArgs args)
     {
@@ -37,6 +41,7 @@ public class PlayerManager : PreparationObject
         Player.DeathMask = _deathMask;
 
         Player.OnStateChanged += OnPlayerStateChanged;
+        Player.OnTriggerEntered += OnPlayerTriggerEntered;
 
         IsReady = true;
     }
@@ -61,5 +66,23 @@ public class PlayerManager : PreparationObject
                 _blockedText.SetActive(true);
                 break;
         }
+    }
+
+    private void OnPlayerTriggerEntered(Collider trigger)
+    {
+        if (trigger.tag.Equals("Respawn") && GameManager.IsPlaying)
+        {
+            if (_checkpointCoroutine != null)
+                StopCoroutine(_checkpointCoroutine);
+
+            _checkpointCoroutine = StartCoroutine(CheckpointSet(trigger.transform.position));
+        }
+    }
+
+    private IEnumerator CheckpointSet(Vector3 newPosition)
+    {
+        yield return new WaitUntil(() => !GameManager.IsPlaying);
+        Player.CheckpointPassed(newPosition);
+        GameManager.ResetSequencer();
     }
 }

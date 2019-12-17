@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : PreparationObject
 {
+    public bool IsPlaying { get; private set; }
+
     [Header("Основные Настройки")]
     [SerializeField]
     private float _delayBetweenFrames;
@@ -44,6 +46,8 @@ public class GameManager : PreparationObject
         _sequencer.Timeline.OnFrameChanged += _timeManager.OnFrameChanged;
         _sequencer.OnStateChanged += _playerManager.OnActionsChanged;
 
+        _playerManager.GameManager = this;
+
         for (int i = 0; i < _sequencer.ActionLines.Length; ++i)
         {
             ActionLine line = _sequencer.ActionLines[i];
@@ -72,6 +76,8 @@ public class GameManager : PreparationObject
 
     private IEnumerator PlayFramesWithDelay()
     {
+        IsPlaying = true;
+
         _sequencer.Timeline.SetSliderValue(0);
 
         for (int i = 0; i < _playerManager.Player.TimeObjectActions.Count + 1; ++i)
@@ -79,7 +85,8 @@ public class GameManager : PreparationObject
             _sequencer.Timeline.SetSliderValue(i);
             yield return new WaitForSeconds(_delayBetweenFrames);
         }
-        
+
+        IsPlaying = false;
         _sequencer.LockSequencer(false);
     }
 }

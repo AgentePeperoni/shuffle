@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -10,7 +11,7 @@ public class TimeManager : PreparationObject
     
     [Header("Основные Настройки")]
     [SerializeField]
-    private int _maxFrames = 400;
+    private int _maxFrames = 16;
 
     private List<TimeObject> _timeObjects;
     
@@ -22,8 +23,7 @@ public class TimeManager : PreparationObject
     private void Awake()
     {
         _timeObjects = FindObjectsOfType<TimeObject>().ToList();
-
-        IsReady = true;
+        StartCoroutine(SetInitialFrames());
     }
 
     private void SetCurrentFrame(int frame)
@@ -34,5 +34,16 @@ public class TimeManager : PreparationObject
             timeObj.SetCurrentFrame(realFrame);
 
         CurrentFrame = realFrame;
+    }
+
+    private IEnumerator SetInitialFrames()
+    {
+        foreach (var obj in _timeObjects)
+        {
+            yield return new WaitUntil(() => obj.IsReady);
+            obj.SetInitialFrameCount(_maxFrames);
+        }
+
+        IsReady = true;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : TimeObject
 {
     public EventHandler<PlayerEventArgs> OnStateChanged;
+    public event Action<Collider> OnTriggerEntered;
 
     public PlayerState State
     {
@@ -19,11 +20,19 @@ public class Player : TimeObject
     public LayerMask DeathMask { get; set; }
     public LayerMask ObstacleMask { get; set; }
 
+    public GameManager GameManager { get; set; }
+
     [SerializeField]
     protected Transform _raycastParent;
     protected PlayerState _state;
 
     protected bool _hasDied;
+
+    public void CheckpointPassed(Vector3 checkpointPosition)
+    {
+        checkpointPosition.y = _initialPosition.y;
+        _initialPosition = checkpointPosition;
+    }
 
     public override void SetCurrentFrame(int frame)
     {
@@ -82,6 +91,11 @@ public class Player : TimeObject
             return PlayerState.Blocked;
         else
             return PlayerState.None;
+    }
+
+    protected void OnTriggerEnter(Collider other)
+    {
+        OnTriggerEntered?.Invoke(other);
     }
 }
 
