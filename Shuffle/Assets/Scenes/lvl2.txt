@@ -12,4 +12,4 @@
 
 без ключа дверь не должна открыться 
 player start position (-6.75; 0; 12.75)
-player start position (-6.75; 0; 18.75)
+player finish position (-6.75; 0; 18.75)

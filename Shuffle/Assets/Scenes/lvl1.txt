@@ -9,3 +9,4 @@
 
 player start position (-11.25; 0; 5.25)
 player finish position (-6.25; 0; 12.75)
+main camera (0.45; 3.7; 0.63)
