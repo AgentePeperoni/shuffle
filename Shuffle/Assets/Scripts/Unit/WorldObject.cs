@@ -13,7 +13,8 @@ public class WorldObject : MonoBehaviour
         BARREL,
         PIT,
         ENEMY,
-        CHEST
+        CHEST,
+        STEPS
     }
 
     [SerializeField] 
