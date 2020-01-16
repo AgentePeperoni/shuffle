@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: "\u0412\u043F\u0435\u0440\u0435\u0434"
   actionType: 1
+  sfx: {fileID: 8300000, guid: 5e7b6cb718d784efdbbf4137e0fc6d20, type: 3}

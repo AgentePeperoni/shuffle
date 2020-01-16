@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 346ea4317439408428a54849f03d23f5, type: 3}
-  m_Name: ActionAttack
+  m_Name: ActionMoveBackward
   m_EditorClassIdentifier: 
-  displayName: "\u0410\u0442\u0430\u043A\u0430"
-  actionType: 16
-  sfx: {fileID: 8300000, guid: 0a88437ddd0b749db85b99e9ef2b95e3, type: 3}
+  displayName: Yfpfl
+  actionType: 4
+  sfx: {fileID: 8300000, guid: 9b9aefe826a2842a3a83a63bd7add787, type: 3}

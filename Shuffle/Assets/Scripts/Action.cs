@@ -7,4 +7,5 @@ public class Action : ScriptableObject
 {
     public string displayName;
     public Actions actionType;
+    public AudioClip sfx;
 }

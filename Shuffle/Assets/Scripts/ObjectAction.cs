@@ -47,5 +47,6 @@ public enum Actions
     MoveForward = 1,
     MoveRight = 2,
     MoveBackward = 4,
-    MoveLeft = 8
+    MoveLeft = 8,
+    Attack = 16
 }
