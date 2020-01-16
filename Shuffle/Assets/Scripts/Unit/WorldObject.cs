@@ -14,7 +14,8 @@ public class WorldObject : MonoBehaviour
         PIT,
         ENEMY,
         CHEST,
-        STEPS
+        STEPS,
+        DOOR
     }
 
     [SerializeField] 
