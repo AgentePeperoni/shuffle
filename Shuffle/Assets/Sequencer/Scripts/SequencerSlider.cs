@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 public class SequencerSlider : MonoBehaviour
 {
+    public EventHandler<int> onFrameChanged;
+
     [SerializeField]
     protected Slider _slider;
 
@@ -14,8 +17,20 @@ public class SequencerSlider : MonoBehaviour
         _slider.value = _slider.minValue;
     }
 
+    public void SetSliderValue(int value)
+    {
+        _slider.value = Mathf.Clamp(value, _slider.minValue, _slider.maxValue);
+    }
+
     protected void Awake()
     {
         _slider.wholeNumbers = true;
+        _slider.onValueChanged.AddListener(OnSliderValueChanged);
+    }
+
+    protected void OnSliderValueChanged(float value)
+    {
+        int frame = Mathf.RoundToInt(value);
+        onFrameChanged?.Invoke(this, frame);
     }
 }

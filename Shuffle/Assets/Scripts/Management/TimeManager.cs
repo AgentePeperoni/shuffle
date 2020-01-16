@@ -6,17 +6,12 @@ using UnityEngine;
 public class TimeManager : PreparationObject
 {
     public int CurrentFrame { get; private set; }
-    public int FrameOffset { get; set; }
-    
-    [Header("Основные Настройки")]
-    [SerializeField]
-    private int _maxFrames = 400;
 
     private List<TimeObject> _timeObjects;
     
-    public void OnFrameChanged(object sender, TimelineEventArgs args)
+    public void OnFrameChanged(object sender, int frame)
     {
-        SetCurrentFrame(args.frame);
+        SetCurrentFrame(frame);
     }
 
     private void Awake()
@@ -28,11 +23,9 @@ public class TimeManager : PreparationObject
 
     private void SetCurrentFrame(int frame)
     {
-        int realFrame = frame + FrameOffset;
-
         foreach (var timeObj in _timeObjects)
-            timeObj.SetCurrentFrame(realFrame);
+            timeObj.SetCurrentFrame(frame);
 
-        CurrentFrame = realFrame;
+        CurrentFrame = frame;
     }
 }

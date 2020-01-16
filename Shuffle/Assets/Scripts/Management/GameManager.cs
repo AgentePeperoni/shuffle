@@ -32,51 +32,26 @@ public class GameManager : PreparationObject
     public void ResetSequencer()
     {
         _sequencer.ResetActionLines();
-        _sequencer.Timeline.SetSliderValue(0);
+        _sequencer.SequencerSlider.SetSliderValue(0);
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
         _timeManager = FindObjectOfType<TimeManager>();
         _playerManager = FindObjectOfType<PlayerManager>();
         _sequencer = FindObjectOfType<Sequencer>();
         
-        _sequencer.Timeline.OnFrameChanged += _timeManager.OnFrameChanged;
-        _sequencer.OnStateChanged += _playerManager.OnActionsChanged;
-
-        for (int i = 0; i < _sequencer.ActionLines.Length; ++i)
-        {
-            ActionLine line = _sequencer.ActionLines[i];
-            yield return new WaitUntil(() => line.IsReady);
-
-            switch (line.LineAction)
-            {
-                case Actions.MoveForward:
-                    line.SetColorToFrames(_moveForwardColor);
-                    break;
-                case Actions.MoveRight:
-                    line.SetColorToFrames(_moveRightColor);
-                    break;
-                case Actions.MoveBackward:
-                    line.SetColorToFrames(_moveBackwardColor);
-                    break;
-                case Actions.MoveLeft:
-                    line.SetColorToFrames(_moveLeftColor);
-                    break;
-                default:
-                    line.SetColorToFrames(Color.black);
-                    break;
-            }
-        }
+        _sequencer.SequencerSlider.onFrameChanged += _timeManager.OnFrameChanged;
+        _sequencer.onActionChanged += _playerManager.OnActionsChanged;
     }
 
     private IEnumerator PlayFramesWithDelay()
     {
-        _sequencer.Timeline.SetSliderValue(0);
+        _sequencer.SequencerSlider.SetSliderValue(0);
 
         for (int i = 0; i < _playerManager.Player.TimeObjectActions.Count + 1; ++i)
         {
-            _sequencer.Timeline.SetSliderValue(i);
+            _sequencer.SequencerSlider.SetSliderValue(i);
             yield return new WaitForSeconds(_delayBetweenFrames);
         }
         

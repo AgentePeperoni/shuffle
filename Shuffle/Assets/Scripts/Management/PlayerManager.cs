@@ -21,10 +21,10 @@ public class PlayerManager : PreparationObject
 
     public void OnActionsChanged(object sender, SequencerEventArgs args)
     {
-        if (args.actionLineEventArgs.frameEventArgs.value)
-            Player.InsertAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
+        if (args.changedFrame.IsOn)
+            Player.InsertAction(args.changedFrame.Index, args.changedLine.AssignedAction);
         else
-            Player.RemoveAction(args.actionLineEventArgs.changedFrame.FrameIndex, args.changedActionLine.LineAction);
+            Player.RemoveAction(args.changedFrame.Index, args.changedLine.AssignedAction);
     }
 
     private void Awake()

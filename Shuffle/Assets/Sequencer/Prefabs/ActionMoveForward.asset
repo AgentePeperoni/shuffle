@@ -10,8 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 346ea4317439408428a54849f03d23f5, type: 3}
-  m_Name: ActionJump
+  m_Name: ActionMoveForward
   m_EditorClassIdentifier: 
-  displayName: "\u041F\u0440\u044B\u0436\u043E\u043A"
-  type: 0
-  moveDirection: {x: 0, y: 1, z: 0}
+  displayName: "\u0412\u043F\u0435\u0440\u0435\u0434"
+  actionType: 1

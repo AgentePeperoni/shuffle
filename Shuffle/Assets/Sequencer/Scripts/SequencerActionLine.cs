@@ -13,6 +13,7 @@ public class SequencerActionLine : MonoBehaviour
     public EventHandler<SequencerActionLineEventArgs> onFramesUnmuted;
     
     public List<SequencerFrame> Frames { get; protected set; }
+    public Action AssignedAction { get; protected set; }
     public string Name
     {
         get => _name;
@@ -23,8 +24,6 @@ public class SequencerActionLine : MonoBehaviour
         }
     }
     protected string _name;
-
-    protected Action _assignedAction;
 
     [SerializeField]
     protected Text _nameField;
@@ -56,6 +55,14 @@ public class SequencerActionLine : MonoBehaviour
 
             Frames.Add(frame);
         }
+
+        AssignedAction = info;
+    }
+
+    public void ResetFrames()
+    {
+        foreach (var frame in Frames)
+            frame.SetState(false);
     }
 
     public void DisableFrames(params int[] indexes)

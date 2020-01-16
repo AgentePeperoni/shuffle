@@ -19,6 +19,8 @@ public class Sequencer : MonoBehaviour
     protected int _initialFrameCount;
     [SerializeField]
     protected Transform _actionLinesContainer;
+    [SerializeField]
+    protected GameObject _graphicsLock;
 
     [Space]
     [SerializeField]
@@ -50,6 +52,14 @@ public class Sequencer : MonoBehaviour
         
         SequencerSlider.Setup(CurrentFrameCount);
     }
+
+    public void ResetActionLines()
+    {
+        foreach (var actionLine in ActionLines)
+            actionLine.ResetFrames();
+    }
+
+    public void LockSequencer(bool value) => _graphicsLock.SetActive(value);
     
     protected void Awake()
     {

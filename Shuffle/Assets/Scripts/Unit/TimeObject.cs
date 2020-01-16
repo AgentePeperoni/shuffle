@@ -24,7 +24,7 @@ public class TimeObject : PreparationObject
             ResolveAction(TimeObjectActions[i]);
     }
 
-    public virtual void InsertAction(int index, Actions action)
+    public virtual void InsertAction(int index, Action action)
     {
         if (TimeObjectActions.Count <= index)
         {
@@ -32,15 +32,15 @@ public class TimeObject : PreparationObject
                 TimeObjectActions.Add(new ObjectAction());
         }
 
-        TimeObjectActions[index].Add(action);
+        TimeObjectActions[index].Add(action.actionType);
     }
 
-    public virtual void RemoveAction(int index, Actions action)
+    public virtual void RemoveAction(int index, Action action)
     {
         if (TimeObjectActions.Count <= index)
             return;
 
-        TimeObjectActions[index].Remove(action);
+        TimeObjectActions[index].Remove(action.actionType);
     }
 
     protected void Awake()

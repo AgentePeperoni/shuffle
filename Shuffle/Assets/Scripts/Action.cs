@@ -6,13 +6,5 @@ using UnityEngine;
 public class Action : ScriptableObject
 {
     public string displayName;
-    public ActionType type;
-
-    public Vector3 moveDirection;
-}
-
-public enum ActionType
-{
-    Move,
-    Attack
+    public Actions actionType;
 }
