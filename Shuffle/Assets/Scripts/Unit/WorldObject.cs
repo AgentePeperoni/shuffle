@@ -17,7 +17,8 @@ public class WorldObject : MonoBehaviour
         STEPS,
         DOOR,
         KEY,
-        PORTAL
+        PORTAL,
+        BUTTON
     }
 
     [SerializeField] 
