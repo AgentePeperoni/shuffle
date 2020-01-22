@@ -13,6 +13,8 @@ public class Sequencer : MonoBehaviour
     public Action[] CurrentActions { get; protected set; }
     public int CurrentFrameCount { get; protected set; }
 
+    public TimeManager CurrentTimeManager { get; set; }
+
     [SerializeField]
     protected Action[] _initialActions;
     [SerializeField]
@@ -51,6 +53,12 @@ public class Sequencer : MonoBehaviour
         }
         
         SequencerSlider.Setup(CurrentFrameCount);
+
+        foreach (var actionLine in ActionLines)
+        {
+            foreach (var frame in actionLine.Frames)
+                frame.onStateChanged += (s, e) => CurrentTimeManager.OnFrameChanged(this, SequencerSlider.CurrentFrame);
+        }
     }
 
     public void ResetActionLines()
@@ -64,12 +72,11 @@ public class Sequencer : MonoBehaviour
     protected void Awake()
     {
         ActionLines = new List<SequencerActionLine>();
+        SequencerSlider = GetComponentInChildren<SequencerSlider>();
     }
 
     protected void Start()
     {
-        SequencerSlider = GetComponentInChildren<SequencerSlider>();
-
         Build(_initialActions, _initialFrameCount);
     }
 

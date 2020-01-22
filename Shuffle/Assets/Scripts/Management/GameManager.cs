@@ -40,7 +40,8 @@ public class GameManager : PreparationObject
         _timeManager = FindObjectOfType<TimeManager>();
         _playerManager = FindObjectOfType<PlayerManager>();
         _sequencer = FindObjectOfType<Sequencer>();
-        
+
+        _sequencer.CurrentTimeManager = _timeManager;
         _sequencer.SequencerSlider.onFrameChanged += _timeManager.OnFrameChanged;
         _sequencer.onActionChanged += _playerManager.OnActionsChanged;
     }

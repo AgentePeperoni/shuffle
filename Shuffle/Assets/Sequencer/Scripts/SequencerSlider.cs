@@ -7,6 +7,8 @@ public class SequencerSlider : MonoBehaviour
 {
     public EventHandler<int> onFrameChanged;
 
+    public int CurrentFrame => (int)_slider.value;
+
     [SerializeField]
     protected Slider _slider;
 

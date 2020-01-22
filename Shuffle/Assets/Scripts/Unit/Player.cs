@@ -27,12 +27,12 @@ public class Player : TimeObject
 
     public override void SetCurrentFrame(int frame)
     {
-        if (TimeObjectActions.Count < frame)
+        if (TimeObjectActions.Count <= frame)
             while (TimeObjectActions.Count <= frame)
                 TimeObjectActions.Add(new ObjectAction());
 
         ResetPlayer();
-        for (int i = 0; i < frame; ++i)
+        for (int i = 0; i <= frame; ++i)
             ResolveAction(TimeObjectActions[i]);
     }
 

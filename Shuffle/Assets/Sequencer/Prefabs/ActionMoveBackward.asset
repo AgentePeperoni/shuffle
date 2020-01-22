@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346ea4317439408428a54849f03d23f5, type: 3}
   m_Name: ActionMoveBackward
   m_EditorClassIdentifier: 
-  displayName: Yfpfl
+  displayName: "\u041D\u0430\u0437\u0430\u0434"
   actionType: 4
   sfx: {fileID: 8300000, guid: 9b9aefe826a2842a3a83a63bd7add787, type: 3}
