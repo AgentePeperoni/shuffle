@@ -21,7 +21,9 @@ public class SequencerSlider : MonoBehaviour
 
     public void SetSliderValue(int value)
     {
+        _slider.interactable = false;
         _slider.value = Mathf.Clamp(value, _slider.minValue, _slider.maxValue);
+        _slider.interactable = true;
     }
 
     protected void Awake()

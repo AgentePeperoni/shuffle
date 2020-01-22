@@ -48,7 +48,8 @@ public class GameManager : PreparationObject
             _playerManager.Player.TimeObjectActions.Clear();
             _playerManager.Player.InitialPosition = e.reachedCheckpoint.startPosition.position;
             _playerManager.Player.InitialRotation = e.reachedCheckpoint.startPosition.rotation;
-            
+            _sequencer.SequencerSlider.SetSliderValue(0);
+
             _sequencer.Build(e.reachedCheckpoint.actions, e.reachedCheckpoint.frames);
         };
 
