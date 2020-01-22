@@ -10,12 +10,12 @@ public class TimeObject : PreparationObject
     [SerializeField]
     protected float _distanceMultiplier = 1;
 
-    protected Vector3 _initialPosition;
-    protected Quaternion _initialRotation;
+    public Vector3 InitialPosition { get; set; }
+    public Quaternion InitialRotation { get; set; }
     
     public virtual void SetCurrentFrame(int frame)
     {
-        if (TimeObjectActions.Count < frame)
+        if (TimeObjectActions.Count <= frame)
             while (TimeObjectActions.Count <= frame)
                 TimeObjectActions.Add(new ObjectAction());
 
@@ -48,16 +48,16 @@ public class TimeObject : PreparationObject
         if (TimeObjectActions == null)
             TimeObjectActions = new List<ObjectAction>();
 
-        _initialPosition = transform.position;
-        _initialRotation = transform.rotation;
+        InitialPosition = transform.position;
+        InitialRotation = transform.rotation;
 
         IsReady = true;
     }
 
     protected virtual void ResetPosition()
     {
-        transform.position = _initialPosition;
-        transform.rotation = _initialRotation;
+        transform.position = InitialPosition;
+        transform.rotation = InitialRotation;
     }
 
     protected virtual void ResolveAction(ObjectAction action)

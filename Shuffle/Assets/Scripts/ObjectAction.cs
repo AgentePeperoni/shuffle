@@ -37,6 +37,10 @@ public class ObjectAction
             MovementDirection += Vector3.back;
         if (ObjectActions.HasFlag(Actions.MoveLeft))
             MovementDirection += Vector3.left;
+        if (ObjectActions.HasFlag(Actions.MoveUp))
+            MovementDirection += Vector3.up;
+        if (ObjectActions.HasFlag(Actions.MoveDown))
+            MovementDirection += Vector3.down;
     }
 }
 
@@ -48,5 +52,7 @@ public enum Actions
     MoveRight = 2,
     MoveBackward = 4,
     MoveLeft = 8,
-    Attack = 16
+    Attack = 16,
+    MoveUp = 32,
+    MoveDown = 64
 }

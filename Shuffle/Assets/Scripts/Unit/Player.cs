@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : TimeObject
 {
     public EventHandler<PlayerEventArgs> OnStateChanged;
+    public EventHandler<PlayerEventArgs> OnCheckpointReached;
 
     public PlayerState State
     {
@@ -12,7 +13,7 @@ public class Player : TimeObject
         set
         {
             _state = value;
-            OnStateChanged(this, new PlayerEventArgs(_state, _hasDied));
+            OnStateChanged(this, new PlayerEventArgs(_state, _hasDied, null));
         }
     }
 
@@ -47,11 +48,12 @@ public class Player : TimeObject
                     return;
 
                 base.ResolveAction(action);
+                State = CheckCurrentState(null);
                 break;
             case PlayerState.Dead:
                 if (!_hasDied)
                 {
-                    base.ResolveAction(action);
+                    //base.ResolveAction(action);
                     _hasDied = true;
                 }
                 break;
@@ -72,9 +74,14 @@ public class Player : TimeObject
 
     protected PlayerState CheckCurrentState(ObjectAction action)
     {
-        Vector3 direction = TranslateToLocal(action);
-        bool obstacle = Physics.Raycast(_raycastParent.position, direction, _distanceMultiplier, ObstacleMask, QueryTriggerInteraction.Collide);
-        bool death = Physics.CheckBox(_raycastParent.position + action.MovementDirection, (Vector3.one / 2.1f), Quaternion.identity, DeathMask);
+        bool obstacle = false;
+        if (action != null)
+        {
+            Vector3 direction = TranslateToLocal(action);
+            obstacle = Physics.Raycast(_raycastParent.position, direction, _distanceMultiplier, ObstacleMask, QueryTriggerInteraction.Collide);
+        }
+
+        bool death = Physics.CheckBox(_raycastParent.position, (Vector3.one / 2.1f), Quaternion.identity, DeathMask, QueryTriggerInteraction.Collide);
 
         if (death)
             return PlayerState.Dead;
@@ -83,17 +90,26 @@ public class Player : TimeObject
         else
             return PlayerState.None;
     }
+
+    protected void OnTriggerEnter(Collider other)
+    {
+        Checkpoint checkpoint = other.GetComponent<Checkpoint>();
+        if (checkpoint != null && !checkpoint.CheckpointReached)
+            OnCheckpointReached?.Invoke(this, new PlayerEventArgs(State, _hasDied, checkpoint));
+    }
 }
 
 public class PlayerEventArgs : EventArgs
 {
     public readonly PlayerState state;
     public readonly bool hasDied;
+    public readonly Checkpoint reachedCheckpoint;
 
-    public PlayerEventArgs(PlayerState currentState, bool hasDied)
+    public PlayerEventArgs(PlayerState currentState, bool hasDied, Checkpoint reachedCheckpoint)
     {
         state = currentState;
         this.hasDied = hasDied;
+        this.reachedCheckpoint = reachedCheckpoint;
     }
 }
 

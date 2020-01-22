@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : PreparationObject
 {
+    public EventHandler<PlayerEventArgs> OnPlayerCheckpointReached;
+
     public Player Player { get; private set; }
 
     [Header("Основные Настройки")]
@@ -37,6 +39,7 @@ public class PlayerManager : PreparationObject
         Player.DeathMask = _deathMask;
 
         Player.OnStateChanged += OnPlayerStateChanged;
+        Player.OnCheckpointReached += OnCheckpointReached;
 
         IsReady = true;
     }
@@ -62,4 +65,6 @@ public class PlayerManager : PreparationObject
                 break;
         }
     }
+
+    private void OnCheckpointReached(object sender, PlayerEventArgs args) => OnPlayerCheckpointReached?.Invoke(sender, args);
 }

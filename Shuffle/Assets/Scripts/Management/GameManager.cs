@@ -41,6 +41,17 @@ public class GameManager : PreparationObject
         _playerManager = FindObjectOfType<PlayerManager>();
         _sequencer = FindObjectOfType<Sequencer>();
 
+        _playerManager.OnPlayerCheckpointReached += delegate (object s, PlayerEventArgs e) 
+        {
+            e.reachedCheckpoint.CheckpointReached = true;
+
+            _playerManager.Player.TimeObjectActions.Clear();
+            _playerManager.Player.InitialPosition = e.reachedCheckpoint.startPosition.position;
+            _playerManager.Player.InitialRotation = e.reachedCheckpoint.startPosition.rotation;
+            
+            _sequencer.Build(e.reachedCheckpoint.actions, e.reachedCheckpoint.frames);
+        };
+
         _sequencer.CurrentTimeManager = _timeManager;
         _sequencer.SequencerSlider.onFrameChanged += _timeManager.OnFrameChanged;
         _sequencer.onActionChanged += _playerManager.OnActionsChanged;
